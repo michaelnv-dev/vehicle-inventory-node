@@ -1,12 +1,12 @@
-var mongoose = require('mongoose');
-var uuid = require('node-uuid');
+const mongoose = require('mongoose');
+const uuid = require('node-uuid');
 
-var VehicleSchema = new mongoose.Schema({  
+const VehicleSchema = new mongoose.Schema({  
   _id: { type: String, default: uuid.v1 },
   name: String,
   timestamp: Number,
   type:{ type: String, enum : ['SUV','Truck','Hybrid'] },
-  last_successful_connection: Number //(Epoch timestamp)
+  last_successful_connection: Number
 });
 mongoose.model('Vehicle', VehicleSchema);
 

@@ -1,4 +1,4 @@
-var log4js = require('log4js');
+const log4js = require('log4js');
 log4js.configure({
   appenders: {
     vehicle:{ type: 'file', filename: 'logs/vehicle.log', category: 'vehicle' }

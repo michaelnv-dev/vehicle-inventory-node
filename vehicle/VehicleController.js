@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const logger = require('../logger').getLogger("vehicle");
+const Vehicle = require('./Vehicle');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
-var Vehicle = require('./Vehicle');
 
 // CREATES A NEW VEHICLE
-router.post('/', function (req, res) {
+router.post('/', (req, res) => {
     Vehicle.create({
             name : req.body.name,
             type : req.body.type,
@@ -24,7 +24,7 @@ router.post('/', function (req, res) {
 });
 
 // RETURNS ALL THE VEHICLE IN THE DATABASE
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
     Vehicle.find({}, function (err, vehicles) {
         if (err) return res.status(500).send("There was a problem finding the Vehicles.");
         res.status(200).send(vehicles);
@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
 });
 
 // GETS A SINGLE VEHICLE FROM THE DATABASE
-router.get('/:id', function (req, res) {
+router.get('/:id', (req, res) => {
     Vehicle.findById(req.params.id, function (err, vehicle) {
         if (err) return res.status(500).send("There was a problem finding the Vehicle.");
         if (!vehicle) return res.status(404).send("No Vehicle found.");
@@ -41,7 +41,7 @@ router.get('/:id', function (req, res) {
 });
 
 // DELETES A VEHICLE FROM THE DATABASE
-router.delete('/:id', function (req, res) {
+router.delete('/:id', (req, res) => {
     Vehicle.findByIdAndRemove(req.params.id, function (err, vehicle) {
         if (err) return res.status(500).send("There was a problem deleting the Vehicle.");
         logger.info("Vehicle: "+ vehicle.name +" was deleted.");
@@ -50,7 +50,7 @@ router.delete('/:id', function (req, res) {
 });
 
 // UPDATES A SINGLE VEHICLE IN THE DATABASE
-router.put('/:id', function (req, res) {
+router.put('/:id', (req, res)  => {
     Vehicle.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, vehicle) {
         if (err) return res.status(500).send("There was a problem updating the vehicle.");
         logger.info("Vehicle: "+ vehicle.name +" was updated.");
